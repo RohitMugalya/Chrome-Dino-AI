@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+from utils import check_collision
+
 pygame.init()
 
 DIMENSION = SCREEN_WIDTH, SCREEN_HEIGHT = 800, 400
@@ -22,11 +24,11 @@ pygame.display.set_caption("Chrome Dino AI")
 
 dino_left = pygame.image.load("assets/dino_left.png").convert_alpha()
 dino_right = pygame.image.load("assets/dino_right.png").convert_alpha()
-cactus = pygame.image.load("assets/cactus.png").convert_alpha()
+cactus_image = pygame.image.load("assets/cactus.png").convert_alpha()
 
 dino_left = pygame.transform.scale(dino_left, DINO_DIMENSION)
 dino_right = pygame.transform.scale(dino_right, DINO_DIMENSION)
-cactus = pygame.transform.scale(cactus, CACTUS_DIMENSION)
+cactus_image = pygame.transform.scale(cactus_image, CACTUS_DIMENSION)
 
 dino_images = [dino_left, dino_right]
 dino_index = 0
@@ -50,8 +52,12 @@ while running:
     screen.fill(SCREEN_BACKGROUND_COLOR)
     pygame.draw.rect(screen, GROUND_COLOR, ground)
     screen.blit(dino_images[dino_index], DINO_COORDINATES)
-    screen.blit(cactus, (cactus_x, CACTUS_Y))
-    cactus_x = (cactus_x - RUN_SPEED) % SCREEN_WIDTH
+    screen.blit(cactus_image, (cactus_x, CACTUS_Y))
+    
+    if check_collision(dino_images[dino_index], DINO_COORDINATES, cactus_image, (cactus_x, CACTUS_Y)):
+        print("Collision detected!")
+    else:
+        cactus_x = (cactus_x - RUN_SPEED) % SCREEN_WIDTH
 
     pygame.display.flip()
     clock.tick(60)
