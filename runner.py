@@ -8,7 +8,7 @@ SCREEN_BACKGROUND_COLOR = (0, 0, 0)
 
 DINO_DIMENSION = DINO_WIDTH, DINO_HEIGHT = 100, 100
 DINO_COORDINATES = DINO_X, DINO_Y = int(0.1 * SCREEN_WIDTH), int(0.6 * SCREEN_HEIGHT)
-CACTUS_X, CACTUS_Y = int(0.8 * SCREEN_WIDTH), int(0.6 * SCREEN_HEIGHT) + 11
+cactus_x, CACTUS_Y = int(0.8 * SCREEN_WIDTH), int(0.6 * SCREEN_HEIGHT) + 11
 CACTUS_DIMENSION = CACTUS_WIDTH, CACTUS_HEIGHT = 50, 100
 
 GROUND_COLOR = (0, 139, 139)
@@ -50,8 +50,8 @@ while running:
     screen.fill(SCREEN_BACKGROUND_COLOR)
     pygame.draw.rect(screen, GROUND_COLOR, ground)
     screen.blit(dino_images[dino_index], DINO_COORDINATES)
-    screen.blit(cactus, (CACTUS_X, CACTUS_Y))
-    CACTUS_X = (CACTUS_X - RUN_SPEED) % SCREEN_WIDTH
+    screen.blit(cactus, (cactus_x, CACTUS_Y))
+    cactus_x = (cactus_x - RUN_SPEED) % SCREEN_WIDTH
 
     pygame.display.flip()
     clock.tick(60)
