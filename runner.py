@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from utils import check_collision
+from cactus import Cactus
 
 pygame.init()
 
@@ -10,7 +11,7 @@ SCREEN_BACKGROUND_COLOR = (0, 0, 0)
 
 DINO_DIMENSION = DINO_WIDTH, DINO_HEIGHT = 100, 100
 DINO_COORDINATES = DINO_X, DINO_Y = int(0.1 * SCREEN_WIDTH), int(0.6 * SCREEN_HEIGHT)
-cactus_x, CACTUS_Y = int(0.8 * SCREEN_WIDTH), int(0.6 * SCREEN_HEIGHT) + 11
+CACTUS_Y = int(0.6 * SCREEN_HEIGHT) + 11
 CACTUS_DIMENSION = CACTUS_WIDTH, CACTUS_HEIGHT = 50, 100
 
 GROUND_COLOR = (0, 139, 139)
@@ -24,16 +25,24 @@ pygame.display.set_caption("Chrome Dino AI")
 
 dino_left = pygame.image.load("assets/dino_left.png").convert_alpha()
 dino_right = pygame.image.load("assets/dino_right.png").convert_alpha()
-cactus_image = pygame.image.load("assets/cactus.png").convert_alpha()
 
 dino_left = pygame.transform.scale(dino_left, DINO_DIMENSION)
 dino_right = pygame.transform.scale(dino_right, DINO_DIMENSION)
-cactus_image = pygame.transform.scale(cactus_image, CACTUS_DIMENSION)
 
 dino_images = [dino_left, dino_right]
 dino_index = 0
 last_switch_time = 0
 ANIMATION_DELAY = 150
+
+cactus = Cactus(
+    image_path="assets/cactus.png",
+    width=CACTUS_WIDTH,
+    height=CACTUS_HEIGHT,
+    initial_x=SCREEN_WIDTH,
+    initial_y=CACTUS_Y,
+    run_speed=RUN_SPEED,
+    screen_width=SCREEN_WIDTH
+)
 
 running = True
 clock = pygame.time.Clock()
@@ -52,12 +61,12 @@ while running:
     screen.fill(SCREEN_BACKGROUND_COLOR)
     pygame.draw.rect(screen, GROUND_COLOR, ground)
     screen.blit(dino_images[dino_index], DINO_COORDINATES)
-    screen.blit(cactus_image, (cactus_x, CACTUS_Y))
-    
-    if check_collision(dino_images[dino_index], DINO_COORDINATES, cactus_image, (cactus_x, CACTUS_Y)):
+    screen.blit(cactus.image, cactus.coordinates)
+
+    if check_collision(dino_images[dino_index], DINO_COORDINATES, cactus.image, cactus.coordinates):
         print("Collision detected!")
     else:
-        cactus_x = (cactus_x - RUN_SPEED) % SCREEN_WIDTH
+        cactus.move()
 
     pygame.display.flip()
     clock.tick(60)
