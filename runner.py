@@ -1,8 +1,9 @@
 import pygame
 import sys
 
-from utils import check_collision
 from cactus import Cactus
+from dino import Dino
+from utils import check_collision
 
 pygame.init()
 
@@ -23,16 +24,17 @@ ground = pygame.Rect(0, DINO_Y + DINO_HEIGHT, SCREEN_WIDTH, GROUND_THICKNESS)
 screen = pygame.display.set_mode(DIMENSION)
 pygame.display.set_caption("Chrome Dino AI")
 
-dino_left = pygame.image.load("assets/dino_left.png").convert_alpha()
-dino_right = pygame.image.load("assets/dino_right.png").convert_alpha()
+dino_costume_paths = ["assets/dino_left.png", "assets/dino_right.png"]
 
-dino_left = pygame.transform.scale(dino_left, DINO_DIMENSION)
-dino_right = pygame.transform.scale(dino_right, DINO_DIMENSION)
-
-dino_images = [dino_left, dino_right]
-dino_index = 0
-last_switch_time = 0
-ANIMATION_DELAY = 150
+dino = Dino(
+    costume_paths=dino_costume_paths,
+    width=DINO_WIDTH,
+    height=DINO_HEIGHT,
+    initial_x=DINO_X,
+    initial_y=DINO_Y,
+    jump_speed=-1,
+    jump_height=50,
+)
 
 cactus = Cactus(
     image_path="assets/cactus.png",
@@ -54,16 +56,14 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    if current_time - last_switch_time > ANIMATION_DELAY:
-        dino_index = (dino_index + 1) % len(dino_images)
-        last_switch_time = current_time
+    dino.switch_costume(current_time)
 
     screen.fill(SCREEN_BACKGROUND_COLOR)
     pygame.draw.rect(screen, GROUND_COLOR, ground)
-    screen.blit(dino_images[dino_index], DINO_COORDINATES)
+    screen.blit(dino.current_costume, dino.coordinates)
     screen.blit(cactus.image, cactus.coordinates)
 
-    if check_collision(dino_images[dino_index], DINO_COORDINATES, cactus.image, cactus.coordinates):
+    if check_collision(dino.current_costume, dino.coordinates, cactus.image, cactus.coordinates):
         print("Collision detected!")
     else:
         cactus.move()
