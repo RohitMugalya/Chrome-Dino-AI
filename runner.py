@@ -17,7 +17,7 @@ CACTUS_DIMENSION = CACTUS_WIDTH, CACTUS_HEIGHT = 50, 100
 
 GROUND_COLOR = (0, 139, 139)
 GROUND_THICKNESS = 10
-RUN_SPEED = 5
+RUN_SPEED = 8
 
 ground = pygame.Rect(0, DINO_Y + DINO_HEIGHT, SCREEN_WIDTH, GROUND_THICKNESS)
 
@@ -32,8 +32,8 @@ dino = Dino(
     height=DINO_HEIGHT,
     initial_x=DINO_X,
     initial_y=DINO_Y,
-    jump_speed=-1,
-    jump_height=50,
+    jump_speed=2e-3,
+    jump_height=int(0.5 * SCREEN_HEIGHT),
 )
 
 cactus = Cactus(
@@ -55,7 +55,13 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and not dino.is_jumping:
+                dino.jump_time = current_time
 
+    if dino.is_jumping:
+        dino.update_y(current_time)
+    
     dino.switch_costume(current_time)
 
     screen.fill(SCREEN_BACKGROUND_COLOR)
