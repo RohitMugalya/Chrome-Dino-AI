@@ -59,16 +59,7 @@ while running:
             if event.key == pygame.K_SPACE and not dino.is_jumping:
                 dino.jump_time = current_time
 
-    if dino.is_jumping:
-        dino.update_y(current_time)
     
-    dino.switch_costume(current_time)
-
-    screen.fill(SCREEN_BACKGROUND_COLOR)
-    pygame.draw.rect(screen, GROUND_COLOR, ground)
-    screen.blit(dino.current_costume, dino.coordinates)
-    screen.blit(cactus.image, cactus.coordinates)
-
     has_collided = check_collision(dino.current_costume, dino.coordinates, cactus.image, cactus.coordinates)
     if not cactus.passed and has_jump_over(dino, cactus) and not has_collided:
         print("Dino has successfully jumped over the cactus!")
@@ -76,7 +67,15 @@ while running:
     if has_collided:
         print("Collision detected!")
     else:
+        if dino.is_jumping:
+            dino.update_y(current_time)
         cactus.move()
+        dino.switch_costume(current_time)
+
+    screen.fill(SCREEN_BACKGROUND_COLOR)
+    pygame.draw.rect(screen, GROUND_COLOR, ground)
+    screen.blit(dino.current_costume, dino.coordinates)
+    screen.blit(cactus.image, cactus.coordinates)
 
     pygame.display.flip()
     clock.tick(60)
