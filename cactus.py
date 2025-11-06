@@ -35,8 +35,12 @@ class Cactus:
         self.x = self.initial_x
         self.y = self.initial_y
     
+    def reset_passed(self):
+        self.passed = False
+    
     def reset(self):
         self.reset_position()
+        self.reset_passed()
 
     @property
     def coordinates(self):
