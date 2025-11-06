@@ -1,6 +1,26 @@
 import pygame
 
 
+def show_message(
+    screen,
+    message,
+    font_size=32,
+    text_color=(255, 255, 255),
+    box_color=(50, 50, 50),
+    padding=30,
+    border_radius=12
+):
+    font = pygame.font.Font(None, font_size)
+    text_surface = font.render(message, True, text_color)
+    text_rect = text_surface.get_rect(center=screen.get_rect().center)
+
+    box_rect = text_rect.inflate(padding * 2, padding)
+
+    pygame.draw.rect(screen, box_color, box_rect, border_radius=border_radius)
+    screen.blit(text_surface, text_rect)
+    pygame.display.flip()
+
+
 def check_collision(sprite1, pos1, sprite2, pos2):
     """
     Returns True if two images (with transparency) collide pixel-perfectly.
