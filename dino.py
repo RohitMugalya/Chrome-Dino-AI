@@ -65,7 +65,7 @@ class Dino:
         time_elapsed = current_time - self.jump_time + self.take_off_time
         
         if time_elapsed >= self.landing_time:
-            self.jump_time = None
+            self.reset_jump_time()
             self.y = self.initial_y
         else:
             self.y = int(self.jump_distance(time_elapsed) + self.initial_y)
