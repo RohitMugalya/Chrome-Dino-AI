@@ -16,6 +16,8 @@ class Cactus:
         self.dimension = (width, height)
         self.x = initial_x
         self.y = initial_y
+        self.initial_x = initial_x
+        self.initial_y = initial_y
         self.run_speed = run_speed
         self.screen_width = screen_width
 
@@ -26,6 +28,13 @@ class Cactus:
         self.x -= self.run_speed
         self.x %= self.screen_width
     
+    def reset_position(self):
+        self.x = self.initial_x
+        self.y = self.initial_y
+    
+    def reset(self):
+        self.reset_position()
+
     @property
     def coordinates(self):
         return self.x, self.y

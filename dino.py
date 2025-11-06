@@ -19,6 +19,7 @@ class Dino:
         self.dimension = (width, height)
         self.x = initial_x
         self.y = initial_y
+        self.initial_x = initial_x
         self.initial_y = initial_y
         self.jump_speed = jump_speed
         self.jump_height = -jump_height
@@ -80,6 +81,21 @@ class Dino:
     @property
     def coordinates(self):
         return self.x, self.y
+    
+    def reset_position(self):
+        self.x = self.initial_x
+        self.y = self.initial_y
+    
+    def reset_jump_time(self):
+        self.jump_time = None
+    
+    def reset_costume_index(self):
+        self.costume_index = 0
+    
+    def reset(self):
+        self.reset_position()
+        self.reset_jump_time()
+        self.reset_costume_index()
 
 
 if __name__ == "__main__":
