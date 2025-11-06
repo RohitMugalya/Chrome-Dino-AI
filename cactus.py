@@ -20,12 +20,15 @@ class Cactus:
         self.initial_y = initial_y
         self.run_speed = run_speed
         self.screen_width = screen_width
+        self.passed = False
 
         self.image = pygame.image.load(self.image_path).convert_alpha()
         self.image = pygame.transform.scale(self.image, self.dimension)
     
     def move(self):
         self.x -= self.run_speed
+        if self.x < 0:
+            self.passed = False
         self.x %= self.screen_width
     
     def reset_position(self):

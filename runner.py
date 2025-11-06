@@ -3,7 +3,7 @@ import sys
 
 from cactus import Cactus
 from dino import Dino
-from utils import check_collision
+from utils import check_collision, has_jump_over
 
 pygame.init()
 
@@ -69,7 +69,11 @@ while running:
     screen.blit(dino.current_costume, dino.coordinates)
     screen.blit(cactus.image, cactus.coordinates)
 
-    if check_collision(dino.current_costume, dino.coordinates, cactus.image, cactus.coordinates):
+    has_collided = check_collision(dino.current_costume, dino.coordinates, cactus.image, cactus.coordinates)
+    if not cactus.passed and has_jump_over(dino, cactus) and not has_collided:
+        print("Dino has successfully jumped over the cactus!")
+        cactus.passed = True
+    if has_collided:
         print("Collision detected!")
     else:
         cactus.move()

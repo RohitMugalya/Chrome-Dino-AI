@@ -27,3 +27,9 @@ def get_horizontal_distance(sprite1, sprite2):
     sprite1_center = sprite1.x + sprite1.dimension[0] / 2
     sprite2_center = sprite2.x + sprite2.dimension[0] / 2
     return sprite2_center - sprite1_center
+
+
+def has_jump_over(dino, cactus):
+    cactus_right = cactus.x + cactus.dimension[0]
+    dino_left = dino.x
+    return cactus_right < dino_left
