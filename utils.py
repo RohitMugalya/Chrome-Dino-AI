@@ -21,3 +21,9 @@ def check_collision(sprite1, pos1, sprite2, pos2):
     overlap_point = mask1.overlap(mask2, offset)
 
     return overlap_point is not None
+
+
+def get_horizontal_distance(sprite1, sprite2):
+    sprite1_center = sprite1.x + sprite1.dimension[0] / 2
+    sprite2_center = sprite2.x + sprite2.dimension[0] / 2
+    return sprite2_center - sprite1_center
