@@ -75,7 +75,7 @@ while running:
         if dino.is_jumping:
             dino_ai.record_observation(take_off_distance, dino_ai.jump_failed)
         else:
-            dino_ai.record_observation(estimated_distance, dino_ai.jump_failed)
+            dino_ai.record_observation(estimated_distance, dino_ai.jump_successful)
 
         show_message(screen, "Re-training AI on new obervations...")
         running = show_restart_prompt(screen, RESTART_PROMPT_Y)
