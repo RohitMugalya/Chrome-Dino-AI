@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 
 def show_message(
@@ -19,6 +20,38 @@ def show_message(
     pygame.draw.rect(screen, box_color, box_rect, border_radius=border_radius)
     screen.blit(text_surface, text_rect)
     pygame.display.flip()
+
+
+def show_restart_prompt(
+    screen,
+    y_position,
+    message="Press ENTER to restart the game",
+    font_size=36,
+    text_color=(255, 255, 255),
+):
+    font = pygame.font.Font(None, font_size)
+    text_surface = font.render(message, True, text_color)
+    
+    screen_rect = screen.get_rect()
+    text_rect = text_surface.get_rect(center=(screen_rect.centerx, y_position))
+
+    waiting = True
+    clock = pygame.time.Clock()
+
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    waiting = False
+
+        screen.blit(text_surface, text_rect)
+        pygame.display.flip()
+        clock.tick(30)
+    
+    return True
 
 
 def check_collision(sprite1, pos1, sprite2, pos2):
