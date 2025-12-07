@@ -21,7 +21,31 @@ class DinoAI:
         self.dataset_headers = self.features + [self.target]
         self.observations = self.load_observations()
         self.model = self.load_model()
+    
+    @property
+    def has_learned(self):
+        if hasattr(self.model, "coef_"):
+            return True
+        return False
 
+    def predict_jump(self, estimated_distance: float) -> int:
+        input_data = pd.DataFrame([[estimated_distance]], columns=self.features)
+        prediction = self.model.predict(input_data)
+        return int(prediction[0])
+    
+    def reinforce(self):
+        if self.jump_failed not in self.observations[self.target].values:
+            print("Teach DinoAI when jump fails before reinforcing.")
+        if self.jump_successful not in self.observations[self.target].values:
+            print("Teach DinoAI when jump succeeds before reinforcing.")
+
+        if self.observations[self.target].nunique() > 1:
+            X = self.observations[self.features]
+            y = self.observations[self.target]
+            print("DinoAI is learning from observations...")
+            self.model.fit(X, y)
+            self.save_model()
+    
     def load_model(self, model_base_dir="generations/"):
         generations = os.listdir(model_base_dir)
         self.generations = [os.path.join(model_base_dir, gen) for gen in generations if os.path.isfile(os.path.join(model_base_dir, gen))]
@@ -57,4 +81,4 @@ class DinoAI:
 if __name__ == "__main__":
     dino_ai = DinoAI()
     dino_ai.load_model()
-    dino_ai.save_model()
+    print(dino_ai.predict_jump(300.0))

@@ -59,6 +59,12 @@ while running:
     estimated_distance = get_horizontal_distance(dino, cactus)
     has_collided = check_collision(dino.current_costume, dino.coordinates, cactus.image, cactus.coordinates)
 
+    if dino_ai.has_learned:
+        jump_prediction = dino_ai.predict_jump(estimated_distance)
+        if not cactus.passed and jump_prediction == dino_ai.jump_successful and not dino.is_jumping:
+            take_off_distance = estimated_distance
+            dino.jump_time = current_time
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -79,6 +85,7 @@ while running:
 
         show_message(screen, "Re-training AI on new obervations...")
         running = show_restart_prompt(screen, RESTART_PROMPT_Y)
+        dino_ai.reinforce()
         dino.reset()
         cactus.reset()
     else:
