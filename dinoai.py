@@ -1,9 +1,15 @@
 import os
+import re
 import joblib
 
 from sklearn.linear_model import LogisticRegression
 import pandas as pd
 
+def extract_generation_number(filename):
+    match = re.search(r'generation_(\d+)\.pkl', filename)
+    if match:
+        return int(match.group(1))
+    return -1
 
 class DinoAI:
     def __init__(self):
@@ -14,14 +20,16 @@ class DinoAI:
         self.dataset_path = "observations.csv"
         self.dataset_headers = self.features + [self.target]
         self.observations = self.load_observations()
+        self.model = self.load_model()
 
     def load_model(self, model_base_dir="generations/"):
         generations = os.listdir(model_base_dir)
-        generations = [os.path.join(model_base_dir, gen) for gen in generations if os.path.isfile(os.path.join(model_base_dir, gen))]
-        generations.sort()
-        
-        if not generations:
+        self.generations = [os.path.join(model_base_dir, gen) for gen in generations if os.path.isfile(os.path.join(model_base_dir, gen))]
+        self.generations.sort(key=extract_generation_number)
+
+        if not self.generations:
             return LogisticRegression()
+        return joblib.load(self.generations[-1])
         
     
     def load_observations(self):
@@ -30,6 +38,13 @@ class DinoAI:
             return df
         else:
             return pd.DataFrame(columns=self.dataset_headers)
+    
+    def save_model(self, model_base_dir="generations/"):
+        generation_number = len(self.generations) + 1
+        if not os.path.exists(model_base_dir):
+            os.makedirs(model_base_dir)
+        model_path = os.path.join(model_base_dir, f"generation_{generation_number}.pkl")
+        joblib.dump(self.model, model_path)
 
     def save_observations(self):
         self.observations.to_csv(self.dataset_path, index=False)
@@ -42,3 +57,4 @@ class DinoAI:
 if __name__ == "__main__":
     dino_ai = DinoAI()
     dino_ai.load_model()
+    dino_ai.save_model()
