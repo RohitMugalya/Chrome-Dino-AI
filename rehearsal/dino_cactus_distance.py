@@ -13,7 +13,7 @@ pygame.display.set_caption("Dino–Cactus Distance Illustration")
 BG_COLOR = (0, 0, 0)
 LINE_COLOR = (0, 220, 220)
 TEXT_COLOR = (255, 255, 255)
-GROUND_COLOR = (0, 139, 139)
+GROUND_COLOR = "brown"
 GROUND_THICKNESS = 10
 
 # -----------------------------
@@ -24,8 +24,8 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # -----------------------------
 # Asset paths
 # -----------------------------
-DINO_IMG_PATH = os.path.join(PROJECT_ROOT, "assets", "dino_left.png")
-CACTUS_IMG_PATH = os.path.join(PROJECT_ROOT, "assets", "cactus.png")
+DINO_IMG_PATH = os.path.join(PROJECT_ROOT, "assets", "dinoai_left.png")
+CACTUS_IMG_PATH = os.path.join(PROJECT_ROOT, "assets", "green_cactus.png")
 
 dino_img = pygame.image.load(DINO_IMG_PATH).convert_alpha()
 cactus_img = pygame.image.load(CACTUS_IMG_PATH).convert_alpha()

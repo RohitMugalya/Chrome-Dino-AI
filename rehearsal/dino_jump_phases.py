@@ -18,7 +18,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Dino Jump Decision Visualization")
 
 BG_COLOR = (0, 0, 0)
-GROUND_COLOR = (0, 139, 139)
+GROUND_COLOR = "brown"
 LINE_COLOR = (0, 220, 220)
 PATH_COLOR = (200, 200, 200)
 TEXT_COLOR = (255, 255, 255)
@@ -42,8 +42,8 @@ os.makedirs(BLOG_ASSETS_DIR, exist_ok=True)
 # -------------------------------------------------
 # Assets
 # -------------------------------------------------
-dino_img = pygame.image.load(os.path.join(ASSETS_DIR, "dino_left.png")).convert_alpha()
-cactus_img = pygame.image.load(os.path.join(ASSETS_DIR, "cactus.png")).convert_alpha()
+dino_img = pygame.image.load(os.path.join(ASSETS_DIR, "dinoai_left.png")).convert_alpha()
+cactus_img = pygame.image.load(os.path.join(ASSETS_DIR, "green_cactus.png")).convert_alpha()
 
 dino_img = pygame.transform.smoothscale(dino_img, (DINO_SIZE, DINO_SIZE))
 cactus_img = pygame.transform.smoothscale(cactus_img, CACTUS_SIZE)
