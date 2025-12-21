@@ -18,7 +18,7 @@ CACTUS_DIMENSION = CACTUS_WIDTH, CACTUS_HEIGHT = 50, 100
 
 RESTART_PROMPT_Y = int(0.4 * SCREEN_HEIGHT)
 
-GROUND_COLOR = (0, 139, 139)
+GROUND_COLOR = "brown"
 GROUND_THICKNESS = 10
 RUN_SPEED = 8
 
@@ -27,7 +27,7 @@ ground = pygame.Rect(0, DINO_Y + DINO_HEIGHT, SCREEN_WIDTH, GROUND_THICKNESS)
 screen = pygame.display.set_mode(DIMENSION)
 pygame.display.set_caption("Chrome Dino AI")
 
-dino_costume_paths = ["assets/dino_left.png", "assets/dino_right.png"]
+dino_costume_paths = ["assets/dinoai_left.png", "assets/dinoai_right.png"]
 
 dino = Dino(
     costume_paths=dino_costume_paths,
@@ -42,7 +42,7 @@ dino = Dino(
 dino_ai = DinoAI()
 
 cactus = Cactus(
-    image_path="assets/cactus.png",
+    image_path="assets/green_cactus.png",
     width=CACTUS_WIDTH,
     height=CACTUS_HEIGHT,
     initial_x=SCREEN_WIDTH,
